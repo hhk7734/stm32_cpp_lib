@@ -25,7 +25,16 @@ class LOT_uart1
   public:
     LOT_uart1();
 
+    /**
+     * @brief HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) 함수에서 사용할 함수
+     * @param UART_HandleTypeDef *huart
+     */
     void rx_cplt_callback(UART_HandleTypeDef *huart);
+
+    /**
+     * @brief HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) 함수에서 사용할 함수
+     * @param UART_HandleTypeDef *huart
+     */
     void tx_cplt_callback(UART_HandleTypeDef *huart);
 
     virtual void transmit_basic(uint8_t data);
@@ -73,4 +82,4 @@ inline void LOT_uart1::tx_cplt_callback(UART_HandleTypeDef *huart)
 
 extern LOT_uart1 uart1;
 
-#endif // _LOT_UART0_H_
+#endif // _LOT_UART1_H_
