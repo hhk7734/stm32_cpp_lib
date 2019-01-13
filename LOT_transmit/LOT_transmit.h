@@ -7,7 +7,7 @@
 #ifndef _LOT_TRANSMIT_H_
 #define _LOT_TRANSMIT_H_
 
-#include <inttypes.h>
+#include <stdint.h>
 
 class LOT_transmit {
 public:
