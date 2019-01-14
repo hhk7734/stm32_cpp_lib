@@ -1,4 +1,3 @@
-
 /**
  * @file LOT_uart1.h
  * @author Hyeon-ki, Hong (hhk7734@gmail.com)
@@ -19,31 +18,30 @@
 extern UART_HandleTypeDef huart1;
 
 class LOT_uart1
-    : public LOT_transmit,
-      public LOT_receive
-{
-  public:
+    : public LOT_transmit
+    , public LOT_receive {
+public:
     LOT_uart1();
 
     /**
      * @brief HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) 함수에서 사용할 함수
      * @param UART_HandleTypeDef *huart
      */
-    void rx_cplt_callback(UART_HandleTypeDef *huart);
+    void rx_cplt_callback( UART_HandleTypeDef *huart );
 
     /**
      * @brief HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) 함수에서 사용할 함수
      * @param UART_HandleTypeDef *huart
      */
-    void tx_cplt_callback(UART_HandleTypeDef *huart);
+    void tx_cplt_callback( UART_HandleTypeDef *huart );
 
-    virtual void transmit_basic(uint8_t data);
+    virtual void transmit_basic( uint8_t data );
 
-    virtual uint16_t receive_basic(uint8_t *data, uint16_t max_size);
-    virtual uint16_t receive_size(void);
-    virtual uint8_t receive_basic(void);
+    virtual uint16_t receive_basic( uint8_t *data, uint16_t max_size );
+    virtual uint16_t receive_size( void );
+    virtual uint8_t  receive_basic( void );
 
-  protected:
+protected:
     volatile uint8_t rx_buf_head;
     volatile uint8_t rx_buf_tail;
     volatile uint8_t tx_buf_head;
@@ -52,34 +50,32 @@ class LOT_uart1
     uint8_t rx_buf[LOT_UART1_RX_BUF_SIZE];
     uint8_t tx_buf[LOT_UART1_TX_BUF_SIZE];
 
-  private:
+private:
 };
 
-inline void LOT_uart1::rx_cplt_callback(UART_HandleTypeDef *huart)
+inline void LOT_uart1::rx_cplt_callback( UART_HandleTypeDef *huart )
 {
-    if (huart->Instance == USART1)
+    if( huart->Instance == USART1 )
     {
-        rx_buf_head = (rx_buf_head + 1) % LOT_UART1_RX_BUF_SIZE;
-        if (rx_buf_head == rx_buf_tail)
-        {
-            rx_buf_tail = (rx_buf_tail + 1) % LOT_UART1_RX_BUF_SIZE;
-        }
-        HAL_UART_Receive_IT(&huart1, &rx_buf[rx_buf_head], 1);
+        rx_buf_head = ( rx_buf_head + 1 ) % LOT_UART1_RX_BUF_SIZE;
+        if( rx_buf_head == rx_buf_tail )
+        { rx_buf_tail = ( rx_buf_tail + 1 ) % LOT_UART1_RX_BUF_SIZE; }
+        HAL_UART_Receive_IT( &huart1, &rx_buf[rx_buf_head], 1 );
     }
 }
 
-inline void LOT_uart1::tx_cplt_callback(UART_HandleTypeDef *huart)
+inline void LOT_uart1::tx_cplt_callback( UART_HandleTypeDef *huart )
 {
-    if (huart->Instance == USART1)
+    if( huart->Instance == USART1 )
     {
-        if (tx_buf_head != tx_buf_tail)
+        if( tx_buf_head != tx_buf_tail )
         {
-            HAL_UART_Transmit_IT(&huart1, &tx_buf[tx_buf_tail], 1);
-            tx_buf_tail = (tx_buf_tail + 1) % LOT_UART1_TX_BUF_SIZE;
+            HAL_UART_Transmit_IT( &huart1, &tx_buf[tx_buf_tail], 1 );
+            tx_buf_tail = ( tx_buf_tail + 1 ) % LOT_UART1_TX_BUF_SIZE;
         }
     }
 }
 
 extern LOT_uart1 uart1;
 
-#endif // _LOT_UART1_H_
+#endif    // _LOT_UART1_H_
