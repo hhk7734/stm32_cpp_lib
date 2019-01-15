@@ -1,7 +1,7 @@
 /**
  * @file LOT_uart1.h
  * @author Hyeon-ki, Hong (hhk7734@gmail.com)
- * @brief UART0 통신
+ * @brief UART1 통신
  */
 
 #ifndef _LOT_UART1_H_
@@ -35,6 +35,11 @@ public:
      */
     void tx_cplt_callback( UART_HandleTypeDef *huart );
 
+    /**
+     * @brief 데이터 수신이 발생한 경우, 수신된 데이터를 버퍼에 저장하는 인터럽트 요청
+     */
+    inline void setup( void ) { HAL_UART_Receive_IT( &huart1, &rx_buf[rx_buf_head], 1 ); }
+
     virtual void transmit_basic( uint8_t data );
 
     virtual uint16_t receive_basic( uint8_t *data, uint16_t max_size );
@@ -60,7 +65,8 @@ inline void LOT_uart1::rx_cplt_callback( UART_HandleTypeDef *huart )
         rx_buf_head = ( rx_buf_head + 1 ) % LOT_UART1_RX_BUF_SIZE;
         if( rx_buf_head == rx_buf_tail )
         { rx_buf_tail = ( rx_buf_tail + 1 ) % LOT_UART1_RX_BUF_SIZE; }
-        HAL_UART_Receive_IT( &huart1, &rx_buf[rx_buf_head], 1 );
+        /// 다음 데이터 수신 준비
+        HAL_UART_Receive_IT( huart, &rx_buf[rx_buf_head], 1 );
     }
 }
 
@@ -70,9 +76,10 @@ inline void LOT_uart1::tx_cplt_callback( UART_HandleTypeDef *huart )
     {
         if( tx_buf_head != tx_buf_tail )
         {
-            HAL_UART_Transmit_IT( &huart1, &tx_buf[tx_buf_tail], 1 );
+            HAL_UART_Transmit_IT( huart, &tx_buf[tx_buf_tail], 1 );
             tx_buf_tail = ( tx_buf_tail + 1 ) % LOT_UART1_TX_BUF_SIZE;
         }
+        /// TxCpltCallback() 함수를 부르기 전 TC 인터럽트는 비활성화 됨
     }
 }
 
