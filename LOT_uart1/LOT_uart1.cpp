@@ -18,6 +18,8 @@ void LOT_uart1::transmit_basic( uint8_t data )
 {
     /**
  * HAL_UART_Transmit_IT()
+ * 
+ * TC == 0
  * TXEIT == 1
  *      UART_Transmit_IT()
  *      data
@@ -25,6 +27,7 @@ void LOT_uart1::transmit_basic( uint8_t data )
  *      TXEIT == 0
  *      TCIT == 1
  * TC == 1
+ * 
  * UART_EndTransmit_IT()
  * TCIT == 0
  * TxCpltCallback()
