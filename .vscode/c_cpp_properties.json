@@ -13,6 +13,8 @@
                 "databaseFilename": ""
             },
             "defines": [
+                "STM32F103xB",
+                "USE_HAL_DRIVER"
             ],
             "macFrameworkPath": [
                 "/System/Library/Frameworks",
@@ -37,6 +39,8 @@
                 "databaseFilename": ""
             },
             "defines": [
+                "STM32F103xB",
+                "USE_HAL_DRIVER"
             ],
             "cStandard": "c11",
             "cppStandard": "c++11",
