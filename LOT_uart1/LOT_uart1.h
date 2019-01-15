@@ -7,9 +7,12 @@
 #ifndef _LOT_UART1_H_
 #define _LOT_UART1_H_
 
-#include "stm32f1xx_hal.h"
 #include "LOT_transmit.h"
 #include "LOT_receive.h"
+
+#if defined( STM32F103xB )
+#    include "stm32f1xx_hal.h"
+#endif
 
 /// 버퍼 크기는 32, 64, 128 ... 2의 지수로 설정
 #define LOT_UART1_TX_BUF_SIZE 64
@@ -79,7 +82,6 @@ inline void LOT_uart1::tx_cplt_callback( UART_HandleTypeDef *huart )
             HAL_UART_Transmit_IT( huart, &tx_buf[tx_buf_tail], 1 );
             tx_buf_tail = ( tx_buf_tail + 1 ) % LOT_UART1_TX_BUF_SIZE;
         }
-        /// TxCpltCallback() 함수를 부르기 전 TC 인터럽트는 비활성화 됨
     }
 }
 

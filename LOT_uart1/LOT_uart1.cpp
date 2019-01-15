@@ -17,17 +17,17 @@ LOT_uart1::LOT_uart1()
 void LOT_uart1::transmit_basic( uint8_t data )
 {
     /**
- * HAL_UART_Transmit_IT
+ * HAL_UART_Transmit_IT()
  * TXEIT == 1
- *      UART_Transmit_IT
+ *      UART_Transmit_IT()
  *      data
  *      ...
  *      TXEIT == 0
  *      TCIT == 1
  * TC == 1
- * UART_EndTransmit_IT
+ * UART_EndTransmit_IT()
  * TCIT == 0
- * TxCpltCallback
+ * TxCpltCallback()
  */
     if( ( tx_buf_head == tx_buf_tail ) && __HAL_UART_GET_FLAG( &huart1, UART_FLAG_TC ) )
     { HAL_UART_Transmit_IT( &huart1, &data, 1 ); }
