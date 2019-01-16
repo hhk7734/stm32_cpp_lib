@@ -61,6 +61,8 @@ protected:
 private:
 };
 
+#warning "void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)"
+
 inline void LOT_uart1::rx_cplt_callback( UART_HandleTypeDef *huart )
 {
     if( huart->Instance == USART1 )
@@ -72,6 +74,8 @@ inline void LOT_uart1::rx_cplt_callback( UART_HandleTypeDef *huart )
         HAL_UART_Receive_IT( huart, &rx_buf[rx_buf_head], 1 );
     }
 }
+
+#warning "void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)"
 
 inline void LOT_uart1::tx_cplt_callback( UART_HandleTypeDef *huart )
 {
