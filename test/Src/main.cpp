@@ -122,9 +122,6 @@ int main( void )
     uart1.setup();
     uart2.setup();
 
-    uart2.transmit_CR_NL( "test" );
-    uint8_t a = 1;
-    i2c1.transmit( 0x68, 0x6B, 1 );
     HAL_Delay( 100 );
 
     /* USER CODE END 2 */
@@ -133,11 +130,10 @@ int main( void )
     /* USER CODE BEGIN WHILE */
     while( 1 )
     {
-        uint8_t data[2];
-        i2c1.receive( 0x68, 0x3B, data, 2 );
-        int16_t temp = ( data[0] << 8 ) | data[1];
-        uart1.transmit( "x: " );
-        uart1.transmit_CR_NL( temp );
+        if(uart1.receive_size())
+        {
+            uart2.transmit(uart1.receive());
+        }
         HAL_Delay( 200 );
         /* USER CODE END WHILE */
 
