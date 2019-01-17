@@ -104,7 +104,7 @@ inline HAL_StatusTypeDef
 inline HAL_StatusTypeDef
     LOT_i2c1::receive( const uint8_t slave_address, uint8_t *data, uint8_t size )
 {
-    return HAL_I2C_Master_Receive( &hi2c1, slave_address << 1, data, size, 10 * size );
+    return HAL_I2C_Master_Receive( &hi2c1, ( slave_address << 1 ) | 1, data, size, 10 * size );
 }
 
 inline HAL_StatusTypeDef LOT_i2c1::receive( const uint8_t slave_address,
@@ -112,15 +112,15 @@ inline HAL_StatusTypeDef LOT_i2c1::receive( const uint8_t slave_address,
                                             uint8_t *     data,
                                             uint8_t       size )
 {
-    return HAL_I2C_Mem_Read( &hi2c1, slave_address << 1, register_address, I2C_MEMADD_SIZE_8BIT,
-                             data, size, 10 * size );
+    return HAL_I2C_Mem_Read( &hi2c1, ( slave_address << 1 ) | 1, register_address,
+                             I2C_MEMADD_SIZE_8BIT, data, size, 10 * size );
 }
 
 inline uint8_t LOT_i2c1::receive( const uint8_t slave_address, const uint8_t register_address )
 {
     uint8_t temp;
-    HAL_I2C_Mem_Read( &hi2c1, slave_address << 1, register_address, I2C_MEMADD_SIZE_8BIT, &temp, 1,
-                      10 );
+    HAL_I2C_Mem_Read( &hi2c1, ( slave_address << 1 ) | 1, register_address, I2C_MEMADD_SIZE_8BIT,
+                      &temp, 1, 10 );
     return temp;
 }
 
