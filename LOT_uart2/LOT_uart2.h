@@ -65,7 +65,7 @@ private:
 
 inline void LOT_uart2::rx_cplt_callback( UART_HandleTypeDef *huart )
 {
-    if( huart->Instance == USART1 )
+    if( huart->Instance == USART2 )
     {
         rx_buf_head = ( rx_buf_head + 1 ) % LOT_UART2_RX_BUF_SIZE;
         if( rx_buf_head == rx_buf_tail )
@@ -79,7 +79,7 @@ inline void LOT_uart2::rx_cplt_callback( UART_HandleTypeDef *huart )
 
 inline void LOT_uart2::tx_cplt_callback( UART_HandleTypeDef *huart )
 {
-    if( huart->Instance == USART1 )
+    if( huart->Instance == USART2 )
     {
         if( tx_buf_head != tx_buf_tail )
         {

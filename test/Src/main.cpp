@@ -46,6 +46,7 @@
 #include "gpio.h"
 
 #include "LOT_uart1.h"
+#include "LOT_uart2.h"
 #include "LOT_i2c1.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -119,8 +120,11 @@ int main( void )
     MX_I2C1_Init();
     /* USER CODE BEGIN 2 */
     uart1.setup();
+    uart2.setup();
+
+    uart2.transmit_CR_NL( "test" );
     uint8_t a = 1;
-      i2c1.transmit(0x68,0x6B,1);
+    i2c1.transmit( 0x68, 0x6B, 1 );
     HAL_Delay( 100 );
 
     /* USER CODE END 2 */
@@ -130,7 +134,7 @@ int main( void )
     while( 1 )
     {
         uint8_t data[2];
-        i2c1.receive(0x68,0x3B,data,2);
+        i2c1.receive( 0x68, 0x3B, data, 2 );
         int16_t temp = ( data[0] << 8 ) | data[1];
         uart1.transmit( "x: " );
         uart1.transmit_CR_NL( temp );
@@ -174,14 +178,16 @@ void SystemClock_Config( void )
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+void HAL_UART_RxCpltCallback( UART_HandleTypeDef *huart )
 {
-    uart1.rx_cplt_callback(huart);
+    uart1.rx_cplt_callback( huart );
+    uart2.rx_cplt_callback( huart );
 }
 
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+void HAL_UART_TxCpltCallback( UART_HandleTypeDef *huart )
 {
-    uart1.tx_cplt_callback(huart);
+    uart1.tx_cplt_callback( huart );
+    uart2.tx_cplt_callback( huart );
 }
 /* USER CODE END 4 */
 

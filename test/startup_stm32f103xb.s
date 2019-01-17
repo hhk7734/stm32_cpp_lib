@@ -43,7 +43,7 @@
   ******************************************************************************
   */
 
-  .syntax unified
+.syntax unified
   .cpu cortex-m3
   .fpu softvfp
   .thumb
@@ -376,4 +376,3 @@ g_pfnVectors:
   .thumb_set USBWakeUp_IRQHandler,Default_Handler
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-
