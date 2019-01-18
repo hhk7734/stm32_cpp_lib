@@ -137,8 +137,8 @@ int main( void )
         uint8_t data[3];
         HAL_GPIO_WritePin( GPIOA, GPIO_PIN_4, GPIO_PIN_RESET );
         // spi1.receive( 0x3B, data, 2 );
-        spi1.transceive(0x3B|0x80);
-        int16_t temp = ( spi1.transceive(0) << 8 ) | spi1.transceive(0);
+        spi1.transceive( 0x3B | 0x80 );
+        int16_t temp = ( spi1.transceive( 0 ) << 8 ) | spi1.transceive( 0 );
         HAL_GPIO_WritePin( GPIOA, GPIO_PIN_4, GPIO_PIN_SET );
         uart1.transmit_CR_NL( temp );
         HAL_Delay( 100 );
