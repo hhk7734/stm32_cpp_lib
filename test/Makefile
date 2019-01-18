@@ -169,6 +169,8 @@ all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET
 
 upload: ;STM32_Programmer_CLI -c port=SWD reset=HWrst -e -d $(BUILD_DIR)/$(TARGET).elf 0x08000000
 
+clang: ;clang-format -verbose -style=file -i $(CXX_SOURCES) $(CXX_SOURCES:.cpp=.h)
+
 #######################################
 # build the application
 #######################################
