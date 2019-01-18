@@ -50,6 +50,8 @@
 #include "LOT_uart2.h"
 #include "LOT_i2c1.h"
 #include "LOT_spi1.h"
+#include "LOT_time.h"
+#include "LOT_lcd_i2c.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -73,7 +75,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+LOT_lcd_i2c lcd( 0x20 );
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -128,20 +130,16 @@ int main( void )
     a[1] = 1;
     spi1.transceive( a, 2 );
     HAL_GPIO_WritePin( GPIOA, GPIO_PIN_4, GPIO_PIN_SET );
+
+    lcd.setup();
     /* USER CODE END 2 */
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while( 1 )
     {
-        uint8_t data[3];
-        HAL_GPIO_WritePin( GPIOA, GPIO_PIN_4, GPIO_PIN_RESET );
-        // spi1.receive( 0x3B, data, 2 );
-        spi1.transceive( 0x3B | 0x80 );
-        int16_t temp = ( spi1.transceive( 0 ) << 8 ) | spi1.transceive( 0 );
-        HAL_GPIO_WritePin( GPIOA, GPIO_PIN_4, GPIO_PIN_SET );
-        uart1.transmit_CR_NL( temp );
-        HAL_Delay( 100 );
+        HAL_GPIO_TogglePin( GPIOC, GPIO_PIN_13 );
+        time.delay_us( 0 );
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */

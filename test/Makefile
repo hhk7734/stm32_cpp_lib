@@ -42,7 +42,8 @@ Src/main.cpp \
 ../LOT_uart2/LOT_uart2.cpp \
 ../LOT_i2c1/LOT_i2c1.cpp \
 ../LOT_spi1/LOT_spi1.cpp \
-
+../LOT_time/LOT_time.cpp \
+../LOT_lcd_i2c/LOT_lcd_i2c.cpp \
 
 # C sources
 C_SOURCES =  \
@@ -136,7 +137,9 @@ C_INCLUDES =  \
 -I../LOT_uart1 \
 -I../LOT_uart2 \
 -I../LOT_i2c1 \
--I../LOT_spi1
+-I../LOT_spi1 \
+-I../LOT_time \
+-I../LOT_lcd_i2c \
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
