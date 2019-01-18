@@ -97,6 +97,7 @@ inline HAL_StatusTypeDef LOT_spi1::transmit( uint8_t register_address, uint8_t d
 
 inline HAL_StatusTypeDef LOT_spi1::receive( uint8_t register_address, uint8_t *data, uint8_t size )
 {
+    /// READ MASK, 읽기 쓰기 구분
     transmit( register_address | LOT_SPI1_READ_MASK );
     return HAL_SPI_Receive( &hspi1, data, size, 10 * size );
 }
