@@ -75,7 +75,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-LOT_lcd_i2c lcd( 0x20 );
+LOT_lcd_i2c lcd( 0x27, 16, 2 );
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -132,6 +132,11 @@ int main( void )
     HAL_GPIO_WritePin( GPIOA, GPIO_PIN_4, GPIO_PIN_SET );
 
     lcd.setup();
+    lcd.backlight_on();
+    lcd.cursor_on();
+    lcd.transmit( "hello" );
+    lcd.display_right();
+    lcd.home();
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -139,7 +144,7 @@ int main( void )
     while( 1 )
     {
         HAL_GPIO_TogglePin( GPIOC, GPIO_PIN_13 );
-        time.delay_us( 0 );
+        time.delay_ms( 1000 );
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */

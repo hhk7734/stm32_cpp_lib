@@ -14,19 +14,155 @@
 #include "LOT_transmit.h"
 
 #include "LOT_i2c1.h"
-#define LCD_I2C i2c1;
+#define LOT_LCD_I2C i2c1
+#warning "SCL 100KHz, standard mode"
+
+const uint8_t LOT_FONT_5X8DOTS { 0 << 2 };
+const uint8_t LOT_FONT_5X10DOTS { 1 << 2 };
 
 class LOT_lcd_i2c : public LOT_transmit {
 public:
-    LOT_lcd_i2c( uint8_t _address );
+    LOT_lcd_i2c( uint8_t _address,
+                 uint8_t _columns,
+                 uint8_t _rows,
+                 uint8_t _font = LOT_FONT_5X8DOTS );
 
     void setup( void );
 
     virtual void transmit_basic( uint8_t data );
 
+    /**
+     * @brief backlight 끔
+     */
+    void backlight_off( void );
+
+    /**
+     * @brief backlight 켬
+     */
+    void backlight_on( void );
+
+    /**
+     * @brief DDRAM을 지우고, 커서를 0번 으로 이동
+     */
+    void clear( void );
+
+    /**
+     * @brief 화면과 커서를 0번 으로 이동
+     */
+    void home( void );
+
+    /**
+     * @brief 왼쪽에서 오른쪽으로 글 쓰기
+     */
+    void left_to_right( void );
+
+    /**
+     * @brief 오른쪽에서 왼쪽으로 글 쓰기
+     */
+    void right_to_left( void );
+
+    /**
+     * @brief 화면 이동 없이 글 쓰기(커서 위치 이동이 보임)
+     */
+    void autoscroll_off( void );
+
+    /**
+     * @brief 화면 이동시키며 글 쓰기(커서 위치가 고정된 것으로 보임)
+     */
+    void autoscroll_on( void );
+
+    /*
+     * @brief 화면 표시 끄기
+     */
+    void display_off( void );
+
+    /**
+     * @brief 화면 표시 켜기
+     */
+    void display_on( void );
+
+    /**
+     * @brief 커서 끄기
+     */
+    void cursor_off( void );
+
+    /**
+     * @brief 커서 켜기
+     */
+    void cursor_on( void );
+
+    /**
+     * @brief 커서 깜빡임 끄기
+     */
+    void blink_off( void );
+
+    /**
+     * @brief 커서 깜빡임 켜기
+     */
+    void blink_on( void );
+
+    /**
+     * @brief 커서 왼쪽으로 이동
+     */
+    void cursor_left( void );
+
+    /**
+     * @brief 커서 오른쪽으로 이동
+     */
+    void cursor_right( void );
+
+    /**
+     * @brief 화면 왼쪽으로 이동
+     */
+    void display_left( void );
+
+    /**
+     * @brief 화면 오른쪽으로 이동
+     */
+    void display_right( void );
+
+    /**
+     * @brief 커서 위치 이동
+     * @param uint8_t columns 0 ~ 열
+     * @param uint8_t rows 0 ~ 행
+     */
+    void set_cursor( uint8_t columns, uint8_t rows );
+
 protected:
 private:
     uint8_t address;
+    uint8_t columns;
+    uint8_t rows;
+    uint8_t font;
+    uint8_t backlight_mask;
+    uint8_t entry_mode_set;
+    uint8_t display_control;
+    uint8_t function_set;
+
+    /**
+     * @brief i2c 통신으로 데이터 송신, 옵션에 backlight_mask 적용
+     * @param uint8_t 4 bit 데이터와 옵션
+     */
+    void i2c_transmit( uint8_t data );
+    
+    /**
+     * @brief enable 신호
+     * @param uint8_t 4 bit 데이터와 옵션
+     */
+    void enable_signal( uint8_t data );
+    
+    /**
+     * @brief 4 bit 데이터 송신 시작 후, enable_signal
+     * @param uint8_t 4 bit 데이터와 옵션
+     */
+    void transmit_4bit( uint8_t data );
+    
+    /**
+     * @brief 8 bit 데이터를 상위 4 bit와 하위 4 bit로 나눠 송신
+     * @param uint8_t 8 bit 데이터
+     * @param uint8_t 옵션
+     */
+    void transmit_8bit( uint8_t data, uint8_t mode );
 };
 
 #endif    // _LOT_LCD_I2C_H_
