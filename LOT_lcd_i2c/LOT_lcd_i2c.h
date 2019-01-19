@@ -6,6 +6,8 @@
 
 /// PCF8574T 주소 0x20 ~ 0x27, SCL 100 KHz
 /// 4bit 제어
+/// B7, B6, B5, B4, B3, B2, B1, B0
+/// D7, D6, D5, D4, NULL, E, RW, RS
 
 #ifndef _LOT_LCD_I2C_H_
 #define _LOT_LCD_I2C_H_
@@ -144,19 +146,19 @@ private:
      * @param uint8_t 4 bit 데이터와 옵션
      */
     void i2c_transmit( uint8_t data );
-    
+
     /**
      * @brief enable 신호
      * @param uint8_t 4 bit 데이터와 옵션
      */
     void enable_signal( uint8_t data );
-    
+
     /**
      * @brief 4 bit 데이터 송신 시작 후, enable_signal
      * @param uint8_t 4 bit 데이터와 옵션
      */
     void transmit_4bit( uint8_t data );
-    
+
     /**
      * @brief 8 bit 데이터를 상위 4 bit와 하위 4 bit로 나눠 송신
      * @param uint8_t 8 bit 데이터

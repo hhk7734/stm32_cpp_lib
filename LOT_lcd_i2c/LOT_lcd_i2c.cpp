@@ -6,8 +6,6 @@
 
 #include "LOT_lcd_i2c.h"
 
-/// B7, B6, B5, B4, B3, B2, B1, B0
-/// D7, D6, D5, D4, NULL, E, RW, RS
 const uint8_t BACKLIGHT_OFF { 0 << 3 };
 const uint8_t BACKLIGHT_ON { 1 << 3 };
 const uint8_t ENABLE_SIGNAL { 1 << 2 };
