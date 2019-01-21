@@ -119,10 +119,13 @@ int main( void )
     MX_GPIO_Init();
     MX_USART1_UART_Init();
     MX_USART2_UART_Init();
-  MX_TIM2_Init();
+    MX_TIM2_Init();
     MX_I2C1_Init();
     MX_SPI1_Init();
     /* USER CODE BEGIN 2 */
+
+    HAL_TIM_Base_Start_IT( &htim2 );
+
     uart1.setup();
     HAL_GPIO_WritePin( GPIOA, GPIO_PIN_4, GPIO_PIN_RESET );
     uint8_t a[2];
@@ -143,8 +146,6 @@ int main( void )
     /* USER CODE BEGIN WHILE */
     while( 1 )
     {
-        HAL_GPIO_TogglePin( GPIOC, GPIO_PIN_13 );
-        time.delay_ms( 1000 );
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
@@ -195,6 +196,11 @@ void HAL_UART_TxCpltCallback( UART_HandleTypeDef *huart )
 {
     uart1.tx_cplt_callback( huart );
     uart2.tx_cplt_callback( huart );
+}
+
+void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef *htim )
+{
+    if( htim->Instance == TIM2 ) { HAL_GPIO_TogglePin( GPIOC, GPIO_PIN_13 ); }
 }
 /* USER CODE END 4 */
 
