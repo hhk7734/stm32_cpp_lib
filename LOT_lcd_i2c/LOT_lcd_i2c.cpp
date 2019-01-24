@@ -90,6 +90,11 @@ void LOT_lcd_i2c::setup( void )
 
 void LOT_lcd_i2c::transmit_basic( uint8_t data ) { transmit_8bit( data, REGISTER_SELECT ); }
 
+void LOT_lcd_i2c::transmit_basic( uint8_t *data, uint16_t size )
+{
+    for( uint16_t i = 0; i < size; ++i ) { transmit_8bit( data[i], REGISTER_SELECT ); }
+}
+
 void LOT_lcd_i2c::backlight_off( void )
 {
     backlight_mask = BACKLIGHT_OFF;

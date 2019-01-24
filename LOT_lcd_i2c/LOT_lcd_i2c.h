@@ -32,6 +32,7 @@ public:
     void setup( void );
 
     virtual void transmit_basic( uint8_t data );
+    virtual void transmit_basic( uint8_t *data, uint16_t size );
 
     /**
      * @brief backlight 끔
