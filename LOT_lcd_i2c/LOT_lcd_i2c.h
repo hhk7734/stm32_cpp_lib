@@ -22,6 +22,8 @@
 const uint8_t LOT_FONT_5X8DOTS { 0 << 2 };
 const uint8_t LOT_FONT_5X10DOTS { 1 << 2 };
 
+const uint8_t LOT_REGISTER_SELECT { 1 };
+
 class LOT_lcd_i2c : public LOT_transmit {
 public:
     LOT_lcd_i2c( uint8_t _address,
@@ -49,6 +51,14 @@ public:
      */
     void clear( void );
 
+    /**
+     * @brief 행, 열 위치부터 size 수만큼 비움
+     * @param uint8_t columns
+     * @param uint8_t rows
+     * @param uint8_t size
+     */
+    void clear(uint8_t columns, uint8_t rows, uint8_t size);
+    
     /**
      * @brief 화면과 커서를 0번 으로 이동
      */
@@ -178,5 +188,12 @@ private:
      */
     void transmit_8bit( uint8_t data, uint8_t mode );
 };
+
+inline void LOT_lcd_i2c::transmit_basic( uint8_t data ) { transmit_8bit( data, LOT_REGISTER_SELECT ); }
+
+inline void LOT_lcd_i2c::transmit_basic( uint8_t *data, uint16_t size )
+{
+    for( uint16_t i = 0; i < size; ++i ) { transmit_8bit( data[i], LOT_REGISTER_SELECT ); }
+}
 
 #endif    // _LOT_LCD_I2C_H_

@@ -10,7 +10,7 @@ const uint8_t BACKLIGHT_OFF { 0 << 3 };
 const uint8_t BACKLIGHT_ON { 1 << 3 };
 const uint8_t ENABLE_SIGNAL { 1 << 2 };
 const uint8_t READ_WRITE { 1 << 1 };
-const uint8_t REGISTER_SELECT { 1 };
+// const uint8_t LOT_REGISTER_SELECT { 1 };
 const uint8_t COMMAND { 0 };
 
 const uint8_t DD_RAM_ADDRESS_SET { 1 << 7 };
@@ -88,13 +88,6 @@ void LOT_lcd_i2c::setup( void )
     home();
 }
 
-void LOT_lcd_i2c::transmit_basic( uint8_t data ) { transmit_8bit( data, REGISTER_SELECT ); }
-
-void LOT_lcd_i2c::transmit_basic( uint8_t *data, uint16_t size )
-{
-    for( uint16_t i = 0; i < size; ++i ) { transmit_8bit( data[i], REGISTER_SELECT ); }
-}
-
 void LOT_lcd_i2c::backlight_off( void )
 {
     backlight_mask = BACKLIGHT_OFF;
@@ -111,6 +104,15 @@ void LOT_lcd_i2c::clear( void )
 {
     transmit_8bit( CLEAR_DISPLAY, COMMAND );
     time.delay_ms( 10 );
+}
+
+void LOT_lcd_i2c::clear(uint8_t columns, uint8_t rows, uint8_t size)
+{
+    set_cursor(columns, rows);
+    for (uint8_t i = 0; i < size; ++i)
+    {
+        transmit_basic(' ');
+    }
 }
 
 void LOT_lcd_i2c::home( void ) { transmit_8bit( CURSOR_AT_HOME, COMMAND ); }
