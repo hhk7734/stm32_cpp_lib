@@ -102,7 +102,11 @@ void LOT_lcd_i2c::backlight_on( void )
     i2c_transmit( 0 );
 }
 
-void LOT_lcd_i2c::clear( void ) { transmit_8bit( CLEAR_DISPLAY, COMMAND ); }
+void LOT_lcd_i2c::clear( void )
+{
+    transmit_8bit( CLEAR_DISPLAY, COMMAND );
+    time.delay_ms( 10 );
+}
 
 void LOT_lcd_i2c::home( void ) { transmit_8bit( CURSOR_AT_HOME, COMMAND ); }
 
