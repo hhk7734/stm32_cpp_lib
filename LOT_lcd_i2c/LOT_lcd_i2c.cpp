@@ -200,7 +200,7 @@ void LOT_lcd_i2c::enable_signal( uint8_t data )
     i2c_transmit( data | ENABLE_SIGNAL );
     time.delay_us( 1 );
     i2c_transmit( data & ~ENABLE_SIGNAL );
-    time.delay_us( 7 );
+    time.delay_us( 17 );
 }
 
 void LOT_lcd_i2c::transmit_4bit( uint8_t data )
