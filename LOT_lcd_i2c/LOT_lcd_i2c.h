@@ -131,6 +131,17 @@ public:
      */
     void set_cursor( uint8_t columns, uint8_t rows );
 
+    /**
+     * @brief 진행 막대, max + 1 칸 필요
+     * @param uint8_t max 최대 칸 수
+     * @param uint8_t bar 진행 정도
+     * @param uint8_t columns 시작 열
+     * @param uint8_t rows 시작 행
+     * @param uint8_t start_mark 시작 표식 유무
+     */
+    void
+        progress_bar( uint8_t max, uint8_t bar, uint8_t columns, uint8_t rows, uint8_t start_mark );
+
 protected:
 private:
     uint8_t address;

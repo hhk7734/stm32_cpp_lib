@@ -223,3 +223,12 @@ void LOT_lcd_i2c::transmit_8bit( uint8_t data, uint8_t mode )
     transmit_4bit( ( data & 0xF0 ) | mode );
     transmit_4bit( ( ( data << 4 ) & 0xF0 ) | mode );
 }
+
+void LOT_lcd_i2c::progress_bar(
+    uint8_t max, uint8_t bar, uint8_t columns, uint8_t rows, uint8_t start_mark )
+{
+    set_cursor( columns, rows );
+    if( start_mark != 0 ) { transmit( static_cast<uint8_t>( 0x7E ) ); }
+    for( uint8_t i = 0; i < bar; ++i ) { transmit( static_cast<uint8_t>( 0xFF ) ); }
+    for( uint8_t i = bar; i < max; ++i ) { transmit( static_cast<uint8_t>( 0x20 ) ); }
+}
