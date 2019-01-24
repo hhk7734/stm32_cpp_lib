@@ -106,13 +106,10 @@ void LOT_lcd_i2c::clear( void )
     time.delay_ms( 10 );
 }
 
-void LOT_lcd_i2c::clear(uint8_t columns, uint8_t rows, uint8_t size)
+void LOT_lcd_i2c::clear( uint8_t columns, uint8_t rows, uint8_t size )
 {
-    set_cursor(columns, rows);
-    for (uint8_t i = 0; i < size; ++i)
-    {
-        transmit_basic(' ');
-    }
+    set_cursor( columns, rows );
+    for( uint8_t i = 0; i < size; ++i ) { transmit_basic( ' ' ); }
 }
 
 void LOT_lcd_i2c::home( void ) { transmit_8bit( CURSOR_AT_HOME, COMMAND ); }
@@ -230,7 +227,7 @@ void LOT_lcd_i2c::progress_bar(
     uint8_t max, uint8_t bar, uint8_t columns, uint8_t rows, uint8_t start_mark )
 {
     set_cursor( columns, rows );
-    if( start_mark != 0 ) { transmit( static_cast<uint8_t>( 0x7E ) ); }
-    for( uint8_t i = 0; i < bar; ++i ) { transmit( static_cast<uint8_t>( 0xFF ) ); }
-    for( uint8_t i = bar; i < max; ++i ) { transmit( static_cast<uint8_t>( 0x20 ) ); }
+    if( start_mark != 0 ) { transmit_basic( 0x7E ); }
+    for( uint8_t i = 0; i < bar; ++i ) { transmit_basic( 0xFF ); }
+    for( uint8_t i = bar; i < max; ++i ) { transmit_basic( 0x20 ); }
 }

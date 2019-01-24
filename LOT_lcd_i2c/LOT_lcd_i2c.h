@@ -57,8 +57,8 @@ public:
      * @param uint8_t rows
      * @param uint8_t size
      */
-    void clear(uint8_t columns, uint8_t rows, uint8_t size);
-    
+    void clear( uint8_t columns, uint8_t rows, uint8_t size );
+
     /**
      * @brief 화면과 커서를 0번 으로 이동
      */
@@ -189,7 +189,10 @@ private:
     void transmit_8bit( uint8_t data, uint8_t mode );
 };
 
-inline void LOT_lcd_i2c::transmit_basic( uint8_t data ) { transmit_8bit( data, LOT_REGISTER_SELECT ); }
+inline void LOT_lcd_i2c::transmit_basic( uint8_t data )
+{
+    transmit_8bit( data, LOT_REGISTER_SELECT );
+}
 
 inline void LOT_lcd_i2c::transmit_basic( uint8_t *data, uint16_t size )
 {
