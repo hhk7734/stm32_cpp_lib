@@ -36,14 +36,13 @@ BUILD_DIR = build
 ######################################
 CXX_SOURCES = \
 Src/main.cpp \
-../LOT_receive/LOT_receive.cpp \
-../LOT_transmit/LOT_transmit.cpp \
+../../common_cpp/LOT_receive/LOT_receive.cpp \
+../../common_cpp/LOT_transmit/LOT_transmit.cpp \
 ../LOT_uart1/LOT_uart1.cpp \
 ../LOT_uart2/LOT_uart2.cpp \
 ../LOT_i2c1/LOT_i2c1.cpp \
 ../LOT_spi1/LOT_spi1.cpp \
 ../LOT_time/LOT_time.cpp \
-../LOT_lcd_i2c/LOT_lcd_i2c.cpp \
 
 # C sources
 C_SOURCES =  \
@@ -132,14 +131,7 @@ C_INCLUDES =  \
 -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32F1xx/Include \
 -IDrivers/CMSIS/Include \
--I../LOT_receive \
--I../LOT_transmit \
--I../LOT_uart1 \
--I../LOT_uart2 \
--I../LOT_i2c1 \
--I../LOT_spi1 \
--I../LOT_time \
--I../LOT_lcd_i2c \
+$(addprefix -I,$(dir $(CXX_SOURCES)))
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections

@@ -51,7 +51,6 @@
 #include "LOT_i2c1.h"
 #include "LOT_spi1.h"
 #include "LOT_time.h"
-#include "LOT_lcd_i2c.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -75,7 +74,6 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-LOT_lcd_i2c lcd( 0x27, 16, 2 );
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -127,25 +125,15 @@ int main( void )
     HAL_TIM_Base_Start_IT( &htim2 );
 
     uart1.setup();
-    HAL_GPIO_WritePin( GPIOA, GPIO_PIN_4, GPIO_PIN_RESET );
-    uint8_t a[2];
-    a[0] = 0x6B;
-    a[1] = 1;
-    spi1.transceive( a, 2 );
-    HAL_GPIO_WritePin( GPIOA, GPIO_PIN_4, GPIO_PIN_SET );
-
-    lcd.setup();
-    lcd.backlight_on();
-    lcd.cursor_on();
-    lcd.transmit( "hello" );
-    lcd.display_right();
-    lcd.home();
+    uart1.transmit_CR_NL("hello");
     /* USER CODE END 2 */
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while( 1 )
     {
+        time.delay_ms(500);
+        HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_13);
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
@@ -200,7 +188,6 @@ void HAL_UART_TxCpltCallback( UART_HandleTypeDef *huart )
 
 void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef *htim )
 {
-    if( htim->Instance == TIM2 ) { HAL_GPIO_TogglePin( GPIOC, GPIO_PIN_13 ); }
 }
 /* USER CODE END 4 */
 
