@@ -29,11 +29,15 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "C:\\Users\\test\\Google Drive\\github\\common_cpp\\**",
+                "C:\\Users\\test\\Google Drive\\github\\stm32_hal_lib_cpp\\**"
             ],
             "browse": {
                 "path": [
-                    "${workspaceFolder}/**"
+                    "${workspaceFolder}/**",
+                    "C:\\Users\\test\\Google Drive\\github\\common_cpp\\**",
+                    "C:\\Users\\test\\Google Drive\\github\\stm32_hal_lib_cpp\\**"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""

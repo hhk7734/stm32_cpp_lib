@@ -43,6 +43,7 @@ Src/main.cpp \
 ../LOT_i2c1/LOT_i2c1.cpp \
 ../LOT_spi1/LOT_spi1.cpp \
 ../LOT_time/LOT_time.cpp \
+../../common_cpp/LOT_enc28j60/LOT_enc28j60.cpp \
 
 # C sources
 C_SOURCES =  \
@@ -131,12 +132,14 @@ C_INCLUDES =  \
 -IDrivers/STM32F1xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32F1xx/Include \
 -IDrivers/CMSIS/Include \
+
+CXX_INCLUDES = \
 $(addprefix -I,$(dir $(CXX_SOURCES)))
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
 
-CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(CXX_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
 
 ifeq ($(DEBUG), 1)
 CFLAGS += -g -gdwarf-2

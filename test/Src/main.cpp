@@ -125,15 +125,15 @@ int main( void )
     HAL_TIM_Base_Start_IT( &htim2 );
 
     uart1.setup();
-    uart1.transmit_CR_NL("hello");
+    uart1.transmit_CR_NL( "hello" );
     /* USER CODE END 2 */
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while( 1 )
     {
-        time.delay_ms(500);
-        HAL_GPIO_TogglePin(GPIOC,GPIO_PIN_13);
+        time.delay_ms( 500 );
+        HAL_GPIO_TogglePin( GPIOC, GPIO_PIN_13 );
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
@@ -186,9 +186,7 @@ void HAL_UART_TxCpltCallback( UART_HandleTypeDef *huart )
     uart2.tx_cplt_callback( huart );
 }
 
-void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef *htim )
-{
-}
+void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef *htim ) {}
 /* USER CODE END 4 */
 
 /**
