@@ -44,7 +44,6 @@ public:
     inline void setup( void ) { HAL_UART_Receive_IT( &huart1, &rx_buf[rx_buf_head], 1 ); }
 
     virtual void transmit_basic( uint8_t data );
-    virtual void transmit_basic( uint8_t *data, uint16_t size );
 
     virtual uint16_t receive_basic( uint8_t *data, uint16_t max_size );
     virtual uint16_t receive_size( void );

@@ -45,11 +45,6 @@ void LOT_uart2::transmit_basic( uint8_t data )
     }
 }
 
-void LOT_uart2::transmit_basic( uint8_t *data, uint16_t size )
-{
-    for( uint16_t i = 0; i < size; ++i ) { transmit_basic( data[i] ); }
-}
-
 uint16_t LOT_uart2::receive_basic( uint8_t *data, uint16_t max_size )
 {
     uint8_t temp = ( LOT_UART2_RX_BUF_SIZE + rx_buf_head - rx_buf_tail ) % LOT_UART2_RX_BUF_SIZE;
