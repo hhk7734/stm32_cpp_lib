@@ -60,7 +60,7 @@ inline uint32_t LOT_time::micros( void )
     {
         ms    = millis();
         count = SysTick->VAL;
-        // for interrupt
+        /// for interrupt
         __ASM volatile( "nop" );
         __ASM volatile( "nop" );
     } while( ms != millis() );
@@ -78,6 +78,7 @@ inline void LOT_time::delay_us( uint16_t us )
         --Delay;
 
         /// 8bit, 32bit 연산이 16bit 연산보다 느림
+        /// @todo 103 / 120 보다 정확한 값 찾기
         if( ( Delay < 256 ) || ( Delay > 65536 ) ) { Delay = Delay * 103 / 120; }
 
         /// r0 = us
